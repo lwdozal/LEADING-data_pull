@@ -25,13 +25,31 @@ library(rdatacite)
 # Essentially it's a bunch of nested lists and datasets that needs to be cleaned up
 ######
 
-try1 <- dc_dois(query = "Rochester")
+test <- dc_dois(query = "Rochester", page = 1)
+test <- unclass(test)
 
+
+#845 resutls an attempt to get all of them
+# continue by looking in the help(rdatacite) support
+
+# try = dc_dois(query = "University of Rochester", page = 1)
+# for (i in 2:34){
+#   try1 <- dc_dois(query = "University of Rochester", page = i)
+#   # The data downloaded comes in a dc class
+#   try1 <- unclass(try1)
+#   try[[length(try)+1]] = try1
+# }
 # The data downloaded comes in a dc class
-try1 <- unclass(try1)
+try <- unclass(try)
+
+# try1 <- dc_dois(query = "Rochester", page = i)
+# The data downloaded comes in a dc class
+# try1 <- unclass(try1)
 
 # Essentially it's a bunch of nested lists and datasets that needs to be cleaned up
-try_meta <- try1$meta
+try_meta <- try$meta
+try_providers <- try_meta$providers
+
 df_try <- try1$data
 df_attributes <- df_try$attributes
 #remove null columns and dataframes that were uneccesary
@@ -53,4 +71,4 @@ df <- cbind(df_attributes, df_client$id)
 df <- apply(df, 2, as.character)
 
 #now we can write the .csv file
-write.csv(df, "datacite.csv", row.names = TRUE)
+# write.csv(df, "datacite.csv", row.names = TRUE)
