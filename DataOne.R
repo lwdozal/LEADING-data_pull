@@ -24,7 +24,7 @@ cn <- CNode("PROD")
 #available metadata
 # getQueryEngineDescription(cn, "solr")
 
-queryParamList <- list(q="rochester", fl="id,title,dateUploaded, abstract, identifier,
+queryParamList <- list(q=" \"University of Rochester\" ", fl="id,title,dateUploaded, abstract, identifier,
 datasource,size, contactOrganization, relatedOrganizations, rightsHolder,sourceText, author, source, 
                        toipc, keywords, keywordsText, funding,authoritativeMN")
 
@@ -33,14 +33,16 @@ datasource,size, contactOrganization, relatedOrganizations, rightsHolder,sourceT
 result <- query(cn, solrQuery=queryParamList, as="data.frame", parse = FALSE)
 result[,'contactOrganization']
 head(result)
+result <- result %>% distinct(id, .keep_all = TRUE)
+write.csv(result, "dataone.csv")
 
+# second test
 queryParams <- list(q="Rochester", fl="id,title,abstract,contactOrganization") 
-
 r = query(cn, queryParams, as = 'data.frame')
 r[,'contactOrganization']
-
-result <- result %>% distinct(title, .keep_all = TRUE)
 r <- r %>% distinct(title,  .keep_all = TRUE)
+
+
 
 
 '
