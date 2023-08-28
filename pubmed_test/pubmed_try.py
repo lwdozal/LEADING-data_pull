@@ -3,6 +3,12 @@
 Created on Tue Aug 15 19:53:23 2023
 
 @author: Laura D
+
+SUPPORT:
+#https://www.tutorialspoint.com/biopython/biopython_entrez_database.htm
+https://medium.com/@kliang933/scraping-big-data-from-public-research-repositories-e-g-pubmed-arxiv-2-488666f6f29b
+https://marcobonzanini.com/2015/01/12/searching-pubmed-with-python/
+https://dataguide.nlm.nih.gov/eutilities/utilities.html
 """
 
 from Bio import Entrez
