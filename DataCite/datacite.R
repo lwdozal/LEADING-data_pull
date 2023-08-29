@@ -29,64 +29,16 @@ test <- dc_dois(query = "Rochester", page = 1)
 test <- unclass(test)
 
 
-#845 resutls an attempt to get all of them
-# continue by looking in the help(rdatacite) support
 
-# try = dc_dois(query = "University of Rochester", page = 1)
-# for (i in 2:34){
-#   try1 <- dc_dois(query = "University of Rochester", page = i)
-#   # The data downloaded comes in a dc class
-#   try1 <- unclass(try1)
-#   try[[length(try)+1]] = try1
-# }
-# The data downloaded comes in a dc class
-try <- unclass(try)
+final_df = data.frame() #"Rochester" Search term
+final_df_UR <- data.frame() #"University of Rochester" search term
 
-# try1 <- dc_dois(query = "Rochester", page = i)
-# The data downloaded comes in a dc class
-# try1 <- unclass(try1)
-
-# Essentially it's a bunch of nested lists and datasets that needs to be cleaned up
-try_meta <- try$meta
-try_providers <- try_meta$providers
-
-df_try <- test$data
-
-df_try <- try$data
-df_attributes <- df_try$attributes
-#remove null columns and dataframes that were uneccesary
-df_attributes <- select(df_attributes, -c("identifiers", "container", "types", "relatedItems", "formats", "contentUrl", "reason", "published"))
-glimpse(df_attributes)
-
-
-# multiple nested datasests but helpful to find the repository it's stored in
-glimpse(df_try)
-df_client <- df_try$relationships
-glimpse(df_client)
-df_client <- df_client$client
-glimpse(df_client)
-df_client <- df_client$data
-glimpse(df_client)
-
-df <- cbind(df_attributes, df_client$id)
-
-# because some of our variables have lists, we need to convert everything to characters
-# df is now a character matrix
-df <- apply(df, 2, as.character)
-
-#now we can write the .csv file
-# write.csv(df, "datacite.csv", row.names = TRUE)
-
-
-
-final_df = df
-final_df_UR <- df
-
-for (i in 2:35) {
+for (i in 1:35) {
   
-  try <- dc_dois(query = "Rochester", page = i)
+  try <- dc_dois(query ="University of Rochester", page = i)
   try <- unclass(try)
-  df_try <- try$data
+  # Essentially it's a bunch of nested lists and datasets that needs to be cleaned up
+    df_try <- try$data
   df_attributes <- df_try$attributes
   # glimpse(df_attributes)
   #remove null columns and dataframes that were uneccesary
@@ -110,7 +62,7 @@ for (i in 2:35) {
   # df is now a character matrix
   df <- apply(df, c(1,2), as.character)
   #bind this dataset to the main dataset
-  final_df <- final_df %>% rbind(df) 
+  final_df_UR <- final_df_UR %>% rbind(df) 
 }
 
 #now we can write the .csv file

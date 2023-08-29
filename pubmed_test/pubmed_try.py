@@ -49,8 +49,37 @@ def summary(id_list, database):
 def main():
     # query = "Dataset AND \"University of Rochester\"" 
     
-    databases = ['pubmed', 'protein', 'nuccore', 'nucleotide', 'nucgss',
-                  'nucest', 'gene', 'nlmcatalog', 'pmc'] 
+    #no errors or sample id csvs
+    # databases = ['pubmed', 'protein', 'nuccore', 'nucleotide', 'nucgss',
+    #               'nucest', 'gene', 'nlmcatalog', 'pmc'] 
+
+    #databases without errors
+    databases = ['pubmed', 'protein', 'nuccore', 'ipg', 'nucleotide', 'nucgss', 
+   'nucest', 'structure', 'genome', 'annotinfo', 'assembly', 'blastdbinfo', 'books', 
+   'cdd', 'clinvar', 'gapplus', 'grasp', 'dbvar', 'gene', 'geoprofiles', 
+   'medgen', 'nlmcatalog', 'omim', 'orgtrack', 'pmc',  'proteinclusters', 'pcassay', 
+   'pccompound', 'pcsubstance', 'seqannot', 'snp', 'taxonomy', 'biocollections', 
+   'gtr','popset'
+   ]
+    '''
+     removed from databases:
+     sparcle - RuntimeError: Invalid db name specified: sparcle
+     bioproject - ValueError: As the XML data contained neither a Document Type Definition (DTD) nor an XML Schema, Bio.Entrez is unable to parse these data. We recommend using a generic XML parser from the Python standard library instead, for example ElementTree.
+     biosample - ValueError: As the XML data contained neither a Document Type Definition (DTD) nor an XML Schema, Bio.Entrez is unable to parse these data. We recommend using a generic XML parser from the Python standard library instead, for example ElementTree.
+     clone -RuntimeError: Invalid db name specified: 
+     gap -ValueError: Unexpected item 'd_object_type' in dictionary
+     gds - file should be open in binary mode
+     homologene - ValueError: As the XML data contained neither a Document Type Definition (DTD) nor an XML Schema, Bio.Entrez is unable to parse these data. We recommend using a generic XML parser from the Python standard library instead, for example ElementTree.
+     mesh -TypeError: file should be opened in binary mode
+     ncbisearch -RuntimeError: Invalid db name specified: ncbisearch
+     probe - RuntimeError: Invalid db name specified:
+     biosystems - RuntimeError: Invalid db name specified: biosystems
+     pubmedhealth - RuntimeError: Invalid db name specified: pubmedhealth
+     sra - ValueError: As the XML data contained neither a Document Type Definition (DTD) nor an XML Schema, Bio.Entrez is unable to parse these data. We recommend using a generic XML parser from the Python standard library instead, for example ElementTree.
+     unigene - RuntimeError: Invalid db name specified: unigene
+     gencoll - RuntimeError: Invalid db name specified: gencoll
+
+    ''' 
     for i in databases:
         print(i)
         results = search("University of Rochester" + 'AND' + "dataset", i)
@@ -82,6 +111,8 @@ def main():
                         writer.writerows([key, value])
 
                 output_file.close()
+
+
                 
             elif isinstance(papers, list): # == "Papers <class 'Bio.Entrez.Parser.ListElement'>":
             # elif type(papers) is list: # == "Papers <class 'Bio.Entrez.Parser.ListElement'>":
@@ -90,11 +121,13 @@ def main():
                     pps.to_csv(output_file)
                 output_file.close()
 
+
             else:
                 # pps = pd.DataFrame(papers)
                 with open(f'pubmed_test_{i}.csv', 'w', encoding="utf-8", newline='') as output_file:
                     papers.to_csv(output_file)
                 output_file.close()
+
 
     
 if __name__ == '__main__':
